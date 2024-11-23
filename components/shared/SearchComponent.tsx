@@ -40,7 +40,7 @@ function SearchComponent() {
         />
         <Button
           size="sm"
-          className="absolute bottom-1 right-14"
+          className="absolute bottom-1 right-14 max-md:hidden block"
           onClick={() => setShowKeyboard(!showKeyboard)}
         >
           <KeyboardIcon />
