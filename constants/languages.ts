@@ -7,3 +7,11 @@ export const languages: Language[] = [
   { code: "en", name: "English", flag: "🇬🇧" },
   { code: "de", name: "German", flag: "🇩🇪" },
 ];
+
+export const languagesObj = {
+  uz: "Uzbek 🇺🇿",
+  ru: "Russian 🇷🇺",
+  kk: "Kazakh 🇰🇿",
+  en: "English 🇬🇧",
+  de: "German 🇩🇪",
+};

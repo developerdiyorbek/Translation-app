@@ -1,9 +1,29 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { languagesObj } from "@/constants/languages";
 import { Volume2 } from "lucide-react";
 import { useParams } from "next/navigation";
+import { Fragment } from "react";
+
+const sentences = [
+  {
+    text: "I plan to go skiing with my girlfriend.",
+    highlight: "go",
+  },
+  {
+    text: "I'd love to go fishing with you.",
+    highlight: "go",
+  },
+  {
+    text: "None of us plan to go swimming today.",
+    highlight: "go",
+  },
+];
+
+type LanguageCode = keyof typeof languagesObj;
 
 function TranslationPageComponent() {
   const params = useParams();
@@ -37,27 +57,60 @@ function TranslationPageComponent() {
         </Button>
       </div>
       <p className="text-gray-600 text-lg mb-4">
-        from {fromLng} - to {toLng}
+        from {languagesObj[fromLng as LanguageCode]} - to{" "}
+        {languagesObj[toLng as LanguageCode]}
       </p>
       <Tabs defaultValue="definition" className="w-full max-w-2xl">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="definition">Definition</TabsTrigger>
-          <TabsTrigger value="synonyms">Synonyms</TabsTrigger>
-          <TabsTrigger value="translation">Translation</TabsTrigger>
+        <TabsList className="w-full justify-start h-12 bg-transparent border-b rounded-none p-0 mb-2">
+          <TabsTrigger
+            value="definition"
+            className="h-12 rounded-none border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:shadow-none"
+          >
+            Definition
+          </TabsTrigger>
+          <TabsTrigger
+            value="synonyms"
+            className="h-12 rounded-none border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:shadow-none"
+          >
+            Synonyms
+          </TabsTrigger>
+          <TabsTrigger
+            value="translation"
+            className="h-12 rounded-none border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:shadow-none"
+          >
+            Translation
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="definition" className="mt-4 space-y-4">
-          <div>
-            <span className="inline-block bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
-              noun
-            </span>
-            <div className="mt-3">
-              <p className="text-gray-600">
-                <span className="text-gray-400 italic">(communication)</span>{" "}
-                greeting used when meeting someone
-              </p>
-              <p className="text-gray-500 mt-2 text-sm italic">
-                She waved and said a cheerful hello
-              </p>
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-3">
+              <Badge variant={"outline"}>Noun</Badge>
+              <Badge variant={"outline"}>Verb</Badge>
+              <Badge variant={"outline"}>Adjective</Badge>
+            </div>
+
+            <div className="space-y-8">
+              {sentences.map((sentence, index) => (
+                <div
+                  key={index}
+                  className="relative border-b border-dashed border-gray-300 py-1"
+                >
+                  <p className="text-blue-600 text-xl">
+                    {sentence.text
+                      .split(sentence.highlight)
+                      .map((part, i, arr) => (
+                        <Fragment key={i}>
+                          {part}
+                          {i < arr.length - 1 && (
+                            <span className="bg-yellow-200 px-0.5 rounded">
+                              {sentence.highlight}
+                            </span>
+                          )}
+                        </Fragment>
+                      ))}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </TabsContent>
